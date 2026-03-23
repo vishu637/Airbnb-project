@@ -1,0 +1,129 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6 mt-4">
+
+      <h1 class="text-center mb-4">Edit Your Listing</h1>
+
+      <form
+        class="bg-body-tertiary border rounded-4 p-4 p-md-5 row g-3 needs-validation"
+        novalidate
+        method="POST"
+        action="/listings/<%= listing._id %>?_method=PUT"
+        enctype="multipart/form-data">
+
+        <div class="col-12">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-control"
+            name="listing[title]"
+            value="<%= listing.title %>"
+            required>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" rows="3"
+            name="listing[description]" required><%= listing.description %></textarea>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Location</label>
+          <input type="text" class="form-control"
+            name="listing[location]"
+            value="<%= listing.location %>"
+            required>
+        </div>
+        <!-- catagery -->
+         <div class="col-12">  
+      <label class="form-label">Categery</label>
+  <select class="form-control" name="listing[catagory]" required>
+    <option value=""><%= listing.catagory %></option>
+    <option value="Trending">Trending</option>
+    <option value="Rooms">Rooms</option>
+    <option value="Iconic Cities">Iconic Cities</option>
+    <option value="Catles">Catles</option>
+    <option value="Mountains">Mountains</option>
+    <option value="Camping">Camping</option>
+    <option value="Farms">Farms</option>
+    <option value="Arctic">Arctic</option>
+    <option value="Dome">Dome</option>
+    <option value="HouseBoat">HouseBoat</option>
+  </select>
+</div>
+        <!-- latitude and the altitude -->
+                 <!-- Latitude & Longitude -->
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Latitude</label>
+            <input
+              type="number"
+              step="any"
+              class="form-control"
+              name="listing[latitude]"
+              value="<%= listing.latitude %>"
+            >
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Longitude</label>
+            <input
+              type="number"
+              step="any"
+              class="form-control"
+              name="listing[longitude]"
+              value="<%= listing.longitude %>"
+            >
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Price</label>
+          <input type="number" class="form-control"
+            name="listing[price]"
+            value="<%= listing.price %>"
+            required>
+        </div>
+
+        <div class="col-md-8">
+          <label class="form-label">Country</label>
+          <input type="text" class="form-control"
+       name="listing[country]"
+      value="<%= listing.country %>"
+       required>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Upload new image</label>
+          <input type="file" class="form-control"
+            name="listing[image]"
+            value="<%= listing.image.url %>"
+           required >
+        </div>
+
+        <div class="col-12 text-center">
+          <button class="btn btn-dark px-5 mt-3" type="submit">
+            Update Listing
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  'use strict'
+  const forms = document.querySelectorAll('.needs-validation')
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+</script>

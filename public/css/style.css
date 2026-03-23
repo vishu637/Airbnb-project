@@ -1,0 +1,279 @@
+
+body {
+  font-family: 'Poppins', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  line-height: 1.5;
+  color: #222;
+}
+/* GLOBAL FONT (fallback rules kept) */
+body {
+  font-family: 'Poppins', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  color: #212529;
+}
+/* form of the create new listing  */
+/* Make footer stick to bottom */
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Main content grows */
+.main-content {
+  flex: 1;
+}
+
+/* Footer */
+footer {
+  margin-top: auto;
+}
+
+
+/* HEADINGS – strong & clean */
+
+h1, h2, h3, h4 {
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+/* Sub-headings */
+h5, h6 {
+  font-weight: 700;
+}
+
+/* Labels (forms look better instantly) */
+label {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Inputs & textarea text */
+input, textarea {
+  font-weight: 500;
+}
+
+/* Buttons – bold & clickable */
+button, .btn {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-transform: none;
+  border-radius: 8px;
+}
+
+/* Small text */
+small {
+  font-weight: 500;
+}
+
+
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.navbar{
+    height: 5rem;
+    background-color: white;
+}
+
+/* Navbar typography & look */
+.navbar{
+  box-shadow: 0 2px 8px rgba(16,24,40,0.04);
+}
+.navbar-brand{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: #ff4e50;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.navbar-brand i{
+  font-size: 1.6rem;
+  color: #ff6b6b;
+}
+.navbar-nav .nav-link{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #222 !important;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+}
+.navbar-nav .nav-link:hover{
+  background: rgba(0,0,0,0.04);
+  color: #111 !important;
+}
+
+/* Listing (show) page styles */
+.listing-title{
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 1.25rem 0 0.6rem 0;
+  color: #111;
+}
+.listing-meta li{
+  margin-bottom: 0.6rem;
+  color: #444;
+  font-size: 1rem;
+}
+.listing-desc{
+  background: #fafafa;
+  padding: 0.8rem;
+  border-radius: 8px;
+}
+.card .card-body{
+  padding: 0.6rem;
+}
+.show-img{
+  border-radius: 12px;
+  max-height: 60vh;
+  object-fit: cover;
+}
+
+.row a{
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem;
+    padding-top: 1rem !important;
+}
+
+.fa-compass{
+    font-size: 2rem;
+    color: #fe424d
+}
+
+/* footer */
+.f-info{
+    text-align: center;
+    height: 8rem;
+    background-color: #ebebeb;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+}
+.f-info-links a{
+    text-decoration: none;
+    color: #222222;
+}
+.f-info-links a :hover{
+  text-decoration: underline;
+   
+}
+.f-info-social i {
+    margin-right: 1rem;
+    color: #222222;
+}
+.nav-link{
+    color: #222222 !important;
+}
+.f-info-links {
+    display: flex;
+    width: 100%;
+    color: #222222;
+    vertical-align: center;
+    justify-content: center;
+    align-items: center;
+  
+}
+.f-info-social{
+    width: 100%;
+    font-size: 1.2rem;
+    margin-right: 2rem;
+    text-decoration: none;
+      display: flex;
+    width: 100%;
+    color: #222222;
+    vertical-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.f-info-brand{
+      display: flex;
+    width: 100%;
+    color: #222222;
+    vertical-align: center;
+    justify-content: center;
+    align-items: center;
+}
+/* image edit  */
+.listing-card {
+    border: none !important;
+    margin-bottom: 2rem;
+}
+
+.card-item {
+    padding: 0 !important;
+    padding-right: 1rem !important;
+    padding-bottom: 2rem !important;
+}
+.card-img-top {
+    object-fit: cover !important;
+    border-radius: 2rem !important;
+    /* margin-right: 1rem !important; */
+    margin-right: 100px !important;
+}
+.Listing-link{
+    text-decoration: none;
+    font-weight: 600;
+}
+.card-text{
+  text-decoration: none;
+  color: #111;
+}
+.card-img-overlay{
+    opacity: 0;
+}
+.card-img-overlay :hover{
+    opacity: 0.2;
+    background-color: white;
+
+}
+.edit-btn{
+    /* background-color: #0f0f0fbd !important; */
+    border: none !important;
+}
+.show-img{
+    height: 50vh;
+}
+/* button styling */
+
+/* Attractive Edit button */
+.btn-edit{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, #ff7a18 0%, #ff4e50 100%);
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  box-shadow: 0 6px 14px rgba(255,78,80,0.18);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0.4px;
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+  text-decoration: none;
+}
+.btn-edit i{ font-size: 0.95rem; }
+.btn-edit:hover, .btn-edit:focus{
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(255,78,80,0.24);
+  opacity: 0.98;
+}
+
+

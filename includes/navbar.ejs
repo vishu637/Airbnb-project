@@ -1,0 +1,98 @@
+<style>
+.btn-search {
+  background-color: red;
+  color: white;
+  display: flex;              /* 🔥 IMPORTANT */
+  align-items: center;        /* vertical alignment */
+  gap: 6px;                   /* spacing between icon & text */
+}
+
+.btn-search:hover {
+  background-color: red;
+  color: white;
+}
+
+.btn-search i {
+  margin: 0;                  /* remove extra spacing */
+}
+.navbar {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+</style>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sticky-top">
+  <div class="container-fluid position-relative">
+
+    <!-- LEFT: Logo -->
+    <a class="navbar-brand" href="/">
+      <i class="fa-regular fa-compass"></i>
+    </a>
+
+
+    <!-- 🔥 HAMBURGER BUTTON (shows on md/sm) -->
+    <button 
+      class="navbar-toggler" 
+      type="button" 
+      data-bs-toggle="collapse" 
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- 🔥 COLLAPSIBLE CONTENT -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+
+      <!-- LEFT MENU -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="/listings">Explore</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/listings/new">Airbnb your place</a>
+        </li>
+      </ul>
+
+      <!-- 🔥 CENTER SEARCH BAR -->
+<div class="mx-auto w-50">
+  <form action="/listings/search" method="GET" class="d-flex">
+
+    <input 
+      type="search"
+      name="country"   
+      class="form-control me-2 rounded-pill"
+      placeholder="Search by country"
+    >
+
+    <button class="btn btn-search rounded-pill px-3" type="submit">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      Search
+    </button>
+
+  </form>
+</div>
+      <!-- RIGHT MENU -->
+      <ul class="navbar-nav ms-auto">
+
+        <% if(!currUser) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/signup"><b>Signup</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login"><b>Login</b></a>
+          </li>
+        <% } %>
+
+        <% if(currUser) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        <% } %>
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
