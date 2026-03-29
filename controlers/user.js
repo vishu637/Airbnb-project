@@ -1,38 +1,41 @@
 const User = require("../models/user");
 
-module.exports.SignUp = async(req,res,next) =>{
-    try{
+// SIGNUP
+module.exports.SignUp = async (req, res, next) => {
+  try {
+    let { username, email, password } = req.body;
 
-    let{username, email, password} = req.body;
-    const newUser = new User({username, email});
-    const registeredUser = await  User.register(newUser ,password);
-    console.log(registeredUser);
-    //to implement automatic login
-    req.logIn(registeredUser,(err) =>{
-        if(err){
-            return next(err);
-        }
-        req.flash("success", "welcome to wanderlust");
-        res.redirect("/listings");
-    })
+    const newUser = new User({ username, email });
+    const registeredUser = await User.register(newUser, password);
 
-    }catch(e){
-        req.flash("error", e.message);
-        res.redirect("/signup");
-    }
-}
+    console.log("User created:", registeredUser);
 
-module.exports.LogIn =  async(req,res) =>{
-    req.flash("success", "Login successful!!welcome to the wanderlust");
-    const redirectUrl = res.locals.redirectUrl || "/listings";
-    res.redirect(redirectUrl);
-}
+    req.login(registeredUser, (err) => {
+      if (err) return next(err);
 
-
-module.exports.LogOut = (req,res,next) =>{
-    req.logOut((err) => {
-      return next(err);
+      req.flash("success", "Welcome to Wanderlust!");
+      res.redirect("/listings");
     });
-    req.flash("success","your are logedOut");
+
+  } catch (e) {
+    console.log("Signup Error:", e);
+    req.flash("error", e.message);
+    res.redirect("/signup");
+  }
+};
+
+// LOGIN
+module.exports.LogIn = (req, res) => {
+  req.flash("success", "Login successful!");
+  res.redirect("/listings");
+};
+
+// LOGOUT
+module.exports.LogOut = (req, res, next) => {
+  req.logOut((err) => {
+    if (err) return next(err);
+
+    req.flash("success", "Logged out successfully");
     res.redirect("/listings");
-}
+  });
+};
