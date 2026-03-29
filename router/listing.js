@@ -8,7 +8,7 @@ const { ListingSchema } = require("../util/schema");
 const ExpressError = require("../util/ExpressError");
 
 const { isLoggedIn, isOwner } = require("../middleware");
-const ListingController = require("../controlers/listing");
+const ListingController = require("../controllers/listing");
 //multer for the adding the funactionality of the enctype: multimedia
 const multer  = require('multer');
 const {storage} = require("../cloudCnfig.js");

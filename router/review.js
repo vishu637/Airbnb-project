@@ -8,7 +8,7 @@ const wrapAsync = require("../util/warpAsync");
 
 const Listing = require("../models/listing");
 const Review = require("../models/Reviews");
-const ReviewControler = require("../controlers/reviews");
+const ReviewControler = require("../controllers/reviews");
 
 const { isLoggedIn, isReviewAuthor } = require("../middleware");
 
