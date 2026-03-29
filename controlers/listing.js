@@ -1,148 +1,85 @@
-const Listing = require("../models/listing");
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
-// ================= INDEX =================
-module.exports.index = async (req, res, next) => {
-  try {
-    const { category } = req.query;
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const Listing = require("./models/listing");
+const path = require("path");
+const methodOverride = require("method-override");
+const ejsMate = require("ejs-mate");
 
-    let allListings;
+const listingsRouter = require("./router/listing.js");
+const reviewRouter = require("./router/review.js");
+const userRouter = require("./router/user.js");
 
-    if (category) {
-      allListings = await Listing.find({ category });
-    } else {
-      allListings = await Listing.find({});
-    }
+const session = require("express-session");
+const flash = require("connect-flash");
 
-    return res.render("listings/index", { allListings });
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const User = require("./models/user.js");
 
-  } catch (err) {
-    return next(err);
-  }
-};
+// ================= DB =================
+const dbUrl = process.env.ATLASDB_URL;
 
-// ================= NEW PAGE =================
-module.exports.showpage = (req, res) => {
-  return res.render("listings/new");
-};
+mongoose.connect(dbUrl)
+  .then(() => console.log("✅ Connected to DB"))
+  .catch(err => console.log(err));
 
-// ================= CREATE =================
-module.exports.CreateRoute = async (req, res, next) => {
-  try {
-    // 🔥 Prevent crash if no image
-    if (!req.file) {
-      req.flash("error", "Image is required");
-      return res.redirect("/listings/new");
-    }
+// ================= APP CONFIG =================
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.engine("ejs", ejsMate);
 
-    let url = req.file.path;
-    let filename = req.file.filename;
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+app.use(express.static(path.join(__dirname, "public")));
 
-    const newListing = new Listing(req.body.listing);
+// ================= SESSION (NO MongoStore) =================
+app.use(session({
+  secret: process.env.SESSION_SECRET || "testsecret",
+  resave: false,
+  saveUninitialized: false,
+}));
 
-    newListing.image = { url, filename };
+app.use(flash());
 
-    newListing.owner = req.user._id;
+// ================= PASSPORT =================
+app.use(passport.initialize());
+app.use(passport.session());
 
-    await newListing.save();
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-    req.flash("success", "Successfully created a new listing!");
+// ================= GLOBAL =================
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.currUser = req.user;
+  next();
+});
 
-    return res.redirect(`/listings/${newListing._id}`);
+// ================= ROUTES =================
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
 
-  } catch (err) {
-    return next(err);
-  }
-};
+app.use("/listings", listingsRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
 
-// ================= SHOW =================
-module.exports.ShowRoute = async (req, res, next) => {
-  try {
-    const { id } = req.params;
+// ================= ERROR =================
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500).send("Something went wrong");
+});
 
-    const listing = await Listing.findById(id)
-      .populate({
-        path: "reviews",
-        populate: { path: "author" },
-      })
-      .populate("owner");
+// ================= SERVER =================
+const PORT = process.env.PORT || 8080;
 
-    if (!listing) {
-      req.flash("error", "The listing is not available!");
-      return res.redirect("/listings");
-    }
-
-    return res.render("listings/show", { listing });
-
-  } catch (err) {
-    return next(err);
-  }
-};
-
-// ================= EDIT =================
-module.exports.EditRoute = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-
-    const listing = await Listing.findById(id);
-
-    if (!listing) {
-      req.flash("error", "Listing not found!");
-      return res.redirect("/listings");
-    }
-
-    return res.render("listings/edit", { listing });
-
-  } catch (err) {
-    return next(err);
-  }
-};
-
-// ================= UPDATE =================
-module.exports.UpdateRoute = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-
-    const listing = await Listing.findByIdAndUpdate(
-      id,
-      { ...req.body.listing },
-      { new: true }
-    );
-
-    if (!listing) {
-      req.flash("error", "The listing is not available!");
-      return res.redirect("/listings");
-    }
-
-    // ✅ Handle new image upload
-    if (req.file) {
-      listing.image = {
-        url: req.file.path,
-        filename: req.file.filename,
-      };
-      await listing.save();
-    }
-
-    req.flash("success", "Listing updated successfully.");
-
-    return res.redirect(`/listings/${id}`);
-
-  } catch (err) {
-    return next(err);
-  }
-};
-
-// ================= DELETE =================
-module.exports.DeleteRoute = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-
-    await Listing.findByIdAndDelete(id);
-
-    req.flash("success", "Listing deleted.");
-
-    return res.redirect("/listings");
-
-  } catch (err) {
-    return next(err);
-  }
-};
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
