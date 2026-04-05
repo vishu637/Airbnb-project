@@ -2,7 +2,12 @@ const Listing = require("../models/listing");
 
 // ================= INDEX =================
 module.exports.index = async (req, res) => {
-  const allListings = await Listing.find({});
+  const { category } = req.query;
+  let filter = {};
+  if (category) {
+    filter.category = category;
+  }
+  const allListings = await Listing.find(filter);
   res.render("listings/index", { allListings });
 };
 
@@ -25,7 +30,7 @@ module.exports.search = async (req, res) => {
 // ================= SHOW =================
 module.exports.show = async (req, res) => {
   const { id } = req.params;
-  const listing = await Listing.findById(id);
+  const listing = await Listing.findById(id).populate('owner');
 
   if (!listing) {
     req.flash("error", "Listing not found!");
@@ -38,6 +43,7 @@ module.exports.show = async (req, res) => {
 // ================= CREATE =================
 module.exports.create = async (req, res) => {
   const newListing = new Listing(req.body.listing);
+  newListing.owner = req.user._id;
   if (req.file) {
     newListing.image = {
       url: req.file.path,

@@ -39,7 +39,7 @@ router.post(
 router.delete(
   "/:reviewId",
   isReviewAuthor,
-  wrapAsync(ReviewControler.DestoryReview)
+  wrapAsync(ReviewControler.DestroyReview)
 );
 
 

@@ -19,7 +19,7 @@ module.exports.CreateReview = async (req, res) => {
 
   }
 
-  module.exports.DestoryReview = async (req, res) => {
+  module.exports.DestroyReview = async (req, res) => {
 
     let { id, reviewId } = req.params;
 

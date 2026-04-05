@@ -22,10 +22,10 @@ image: {
  longitude: Number,
   country: String,
 
-  catagory: {
+  category: {
     type : String,
     enum : ["Trending","Rooms","Iconic Cities",
-      "Catles", "Mountains","Camping",
+      "Castles","Mountains","Camping",
     "Farms","Arctic","Dome","HouseBoat",],
   },
 

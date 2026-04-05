@@ -8,7 +8,7 @@ const sampleListings = [
     country: "United States",
     latitude: 34.0259,
     longitude: -118.7798,
-    catagory: "Trending"
+    category: "Trending"
   },
   {
     title: "Modern Loft in Downtown",
@@ -19,7 +19,7 @@ const sampleListings = [
     country: "United States",
     latitude: 40.7128,
     longitude: -74.0060,
-    catagory: "Iconic Cities"
+    category: "Iconic Cities"
   },
   {
     title: "Mountain Retreat",
@@ -30,7 +30,7 @@ const sampleListings = [
     country: "United States",
     latitude: 39.1911,
     longitude: -106.8175,
-    catagory: "Mountains"
+    category: "Mountains"
   },
   {
     title: "Historic Villa in Tuscany",
@@ -41,7 +41,7 @@ const sampleListings = [
     country: "Italy",
     latitude: 43.7696,
     longitude: 11.2558,
-    catagory: "Catles"
+    category: "Castles"
   },
   {
     title: "Beach House in Goa",
@@ -52,7 +52,7 @@ const sampleListings = [
     country: "India",
     latitude: 15.2993,
     longitude: 74.1240,
-    catagory: "Trending"
+    category: "Trending"
   },
   {
     title: "Hill Station Cottage",
@@ -63,7 +63,7 @@ const sampleListings = [
     country: "India",
     latitude: 32.2432,
     longitude: 77.1892,
-    catagory: "Mountains"
+    category: "Mountains"
   },
   {
     title: "Dubai Marina Apartment",
@@ -74,7 +74,7 @@ const sampleListings = [
     country: "UAE",
     latitude: 25.2048,
     longitude: 55.2708,
-    catagory: "Iconic Cities"
+    category: "Iconic Cities"
   },
   {
     title: "Tokyo Apartment",
@@ -85,7 +85,7 @@ const sampleListings = [
     country: "Japan",
     latitude: 35.6762,
     longitude: 139.6503,
-    catagory: "Rooms"
+    category: "Rooms"
   },
   {
     title: "Sydney Harbour View",
@@ -96,7 +96,7 @@ const sampleListings = [
     country: "Australia",
     latitude: -33.8688,
     longitude: 151.2093,
-    catagory: "Trending"
+    category: "Trending"
   },
   {
     title: "Paris Luxury Apartment",
@@ -107,7 +107,7 @@ const sampleListings = [
     country: "France",
     latitude: 48.8566,
     longitude: 2.3522,
-    catagory: "Iconic Cities"
+    category: "Iconic Cities"
   },
   {
     title: "Berlin Studio",
@@ -118,7 +118,7 @@ const sampleListings = [
     country: "Germany",
     latitude: 52.52,
     longitude: 13.405,
-    catagory: "Rooms"
+    category: "Rooms"
   },
   {
     title: "Rome Apartment",
@@ -129,7 +129,7 @@ const sampleListings = [
     country: "Italy",
     latitude: 41.9028,
     longitude: 12.4964,
-    catagory: "Iconic Cities"
+    category: "Iconic Cities"
   },
   {
     title: "Bangkok Condo",
@@ -140,7 +140,7 @@ const sampleListings = [
     country: "Thailand",
     latitude: 13.7563,
     longitude: 100.5018,
-    catagory: "Rooms"
+    category: "Rooms"
   },
   {
     title: "Cape Town Sea View",
@@ -151,7 +151,7 @@ const sampleListings = [
     country: "South Africa",
     latitude: -33.9249,
     longitude: 18.4241,
-    catagory: "Trending"
+    category: "Trending"
   },
   {
     title: "Toronto Condo",
@@ -162,7 +162,7 @@ const sampleListings = [
     country: "Canada",
     latitude: 43.6532,
     longitude: -79.3832,
-    catagory: "Rooms"
+    category: "Rooms"
   },
   {
     title: "Singapore Apartment",
@@ -173,7 +173,7 @@ const sampleListings = [
     country: "Singapore",
     latitude: 1.3521,
     longitude: 103.8198,
-    catagory: "Iconic Cities"
+    category: "Iconic Cities"
   },
   {
     title: "Iceland Cabin",
@@ -184,7 +184,7 @@ const sampleListings = [
     country: "Iceland",
     latitude: 64.1466,
     longitude: -21.9426,
-    catagory: "Arctic"
+    category: "Arctic"
   },
   {
     title: "Nepal Lodge",
@@ -195,7 +195,7 @@ const sampleListings = [
     country: "Nepal",
     latitude: 27.7172,
     longitude: 85.324,
-    catagory: "Camping"
+    category: "Camping"
   },
   {
     title: "Rio Beach Apartment",
@@ -206,7 +206,7 @@ const sampleListings = [
     country: "Brazil",
     latitude: -22.9068,
     longitude: -43.1729,
-    catagory: "Trending"
+    category: "Trending"
   },
   {
     title: "Houseboat Stay",
@@ -217,7 +217,7 @@ const sampleListings = [
     country: "India",
     latitude: 9.9312,
     longitude: 76.2673,
-    catagory: "HouseBoat"
+    category: "HouseBoat"
   }
 ];
 
