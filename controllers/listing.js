@@ -11,6 +11,17 @@ module.exports.renderNewForm = (req, res) => {
   res.render("listings/new");
 };
 
+// ================= SEARCH =================
+module.exports.search = async (req, res) => {
+  const { country } = req.query;
+  if (!country) {
+    req.flash("error", "Please enter a country to search");
+    return res.redirect("/listings");
+  }
+  const allListings = await Listing.find({ country: new RegExp(country, 'i') });
+  res.render("listings/index", { allListings });
+};
+
 // ================= SHOW =================
 module.exports.show = async (req, res) => {
   const { id } = req.params;

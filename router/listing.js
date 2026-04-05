@@ -36,6 +36,9 @@ router.route("/")
 // ================= NEW =================
 router.get("/new", isLoggedIn, ListingController.renderNewForm);
 
+// ================= SEARCH =================
+router.get("/search", wrapAsync(ListingController.search));
+
 // ================= SHOW + UPDATE + DELETE =================
 router.route("/:id")
   .get(wrapAsync(ListingController.show))
