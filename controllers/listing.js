@@ -30,7 +30,9 @@ module.exports.search = async (req, res) => {
 // ================= SHOW =================
 module.exports.show = async (req, res) => {
   const { id } = req.params;
-  const listing = await Listing.findById(id).populate('owner');
+  const listing = await Listing.findById(id)
+    .populate('owner')
+    .populate({ path: 'reviews', populate: { path: 'author' } });
 
   if (!listing) {
     req.flash("error", "Listing not found!");

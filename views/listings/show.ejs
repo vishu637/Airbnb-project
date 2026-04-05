@@ -14,7 +14,8 @@
   </div>
 
   <li class="listing-owner">
-    <strong>Owned By:</strong> <%= listing.owner ? listing.owner.username : "N/A" %>
+    <strong>Owned By:</strong>
+    <%= listing.owner ? (listing.owner.username || listing.owner.email || "N/A") : "N/A" %>
   </li>
 
   <li class="listing-desc">
@@ -135,7 +136,7 @@
     <div class="card-body">
 
       <h5 class="card-title">
-        <%= review.author ? review.author.username : "Anonymous" %>
+        <%= review.author ? (review.author.username || review.author.email || "Anonymous") : "Anonymous" %>
       </h5>
       <p class="starability-result card-text" data-rating= <%= review.rating %>>
       </p>
