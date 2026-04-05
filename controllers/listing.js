@@ -1,85 +1,67 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
+const Listing = require("../models/listing");
 
-const express = require("express");
-const app = express();
-const mongoose = require("mongoose");
-const Listing = require("../models/listing.js");
-const path = require("path");
-const methodOverride = require("method-override");
-const ejsMate = require("ejs-mate");
+// ================= INDEX =================
+module.exports.index = async (req, res) => {
+  const listings = await Listing.find({});
+  res.render("listings/index", { listings });
+};
 
-const listingsRouter = require("./router/listing.js");
-const reviewRouter = require("./router/review.js");
-const userRouter = require("./router/user.js");
+// ================= NEW FORM =================
+module.exports.renderNewForm = (req, res) => {
+  res.render("listings/new");
+};
 
-const session = require("express-session");
-const flash = require("connect-flash");
+// ================= SHOW =================
+module.exports.show = async (req, res) => {
+  const { id } = req.params;
+  const listing = await Listing.findById(id);
 
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const User = require("./models/user.js");
+  if (!listing) {
+    req.flash("error", "Listing not found!");
+    return res.redirect("/listings");
+  }
 
-// ================= DB =================
-const dbUrl = process.env.ATLASDB_URL;
+  res.render("listings/show", { listing });
+};
 
-mongoose.connect(dbUrl)
-  .then(() => console.log("✅ Connected to DB"))
-  .catch(err => console.log(err));
+// ================= CREATE =================
+module.exports.create = async (req, res) => {
+  const newListing = new Listing(req.body.listing);
+  await newListing.save();
 
-// ================= APP CONFIG =================
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-app.engine("ejs", ejsMate);
-
-app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, "public")));
-
-// ================= SESSION (NO MongoStore) =================
-app.use(session({
-  secret: process.env.SESSION_SECRET || "testsecret",
-  resave: false,
-  saveUninitialized: false,
-}));
-
-app.use(flash());
-
-// ================= PASSPORT =================
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-// ================= GLOBAL =================
-app.use((req, res, next) => {
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
-  res.locals.currUser = req.user;
-  next();
-});
-
-// ================= ROUTES =================
-app.get("/", (req, res) => {
+  req.flash("success", "Listing created!");
   res.redirect("/listings");
-});
+};
 
-app.use("/listings", listingsRouter);
-app.use("/listings/:id/reviews", reviewRouter);
-app.use("/", userRouter);
+// ================= EDIT FORM =================
+module.exports.renderEditForm = async (req, res) => {
+  const { id } = req.params;
+  const listing = await Listing.findById(id);
 
-// ================= ERROR =================
-app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(500).send("Something went wrong");
-});
+  if (!listing) {
+    req.flash("error", "Listing not found!");
+    return res.redirect("/listings");
+  }
 
-// ================= SERVER =================
-const PORT = process.env.PORT || 8080;
+  res.render("listings/edit", { listing });
+};
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+// ================= UPDATE =================
+module.exports.update = async (req, res) => {
+  const { id } = req.params;
+
+  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+
+  req.flash("success", "Listing updated!");
+  res.redirect(`/listings/${id}`);
+};
+
+// ================= DELETE =================
+module.exports.destroy = async (req, res) => {
+  const { id } = req.params;
+
+  await Listing.findByIdAndDelete(id);
+
+  req.flash("success", "Listing deleted!");
+  res.redirect("/listings");
+};

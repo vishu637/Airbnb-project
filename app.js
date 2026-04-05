@@ -5,26 +5,23 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 
-const listingsRouter = require("./router/listing.js");
-const reviewRouter = require("./router/review.js");
-const userRouter = require("./router/user.js");
+const listingsRouter = require("./router/listing");
+const reviewRouter = require("./router/review");
+const userRouter = require("./router/user");
 
 const session = require("express-session");
 const flash = require("connect-flash");
 
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const User = require("./models/user.js");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
 
 // ================= DB =================
-const dbUrl = process.env.ATLASDB_URL;
-
-mongoose.connect(dbUrl)
+mongoose.connect(process.env.ATLASDB_URL)
   .then(() => console.log("✅ Connected to DB"))
   .catch(err => console.log(err));
 
@@ -37,7 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
-// ================= SESSION (NO MongoStore) =================
+// ================= SESSION =================
 app.use(session({
   secret: process.env.SESSION_SECRET || "testsecret",
   resave: false,

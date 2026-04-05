@@ -1,68 +1,63 @@
 const express = require("express");
 const router = express.Router();
 
-const Listing = require("../models/listing");
 const wrapAsync = require("../util/warpAsync");
-
 const { ListingSchema } = require("../util/schema");
 const ExpressError = require("../util/ExpressError");
 
 const { isLoggedIn, isOwner } = require("../middleware");
 const ListingController = require("../controllers/listing");
-//multer for the adding the funactionality of the enctype: multimedia
-const multer  = require('multer');
-const {storage} = require("../cloudCnfig.js");
-const upload = multer({storage });
 
-// ================= VALIDATION MIDDLEWARE =================
+// multer
+const multer = require("multer");
+const { storage } = require("../cloudConfig"); // check file name
+const upload = multer({ storage });
 
+// ================= VALIDATION =================
 const validateListing = (req, res, next) => {
   const { error } = ListingSchema.validate(req.body);
 
   if (error) {
     throw new ExpressError(400, error.details[0].message);
-  } else {
-    next();
   }
+  next();
 };
 
-// ================= INDEX ROUTE ================= & ================= CREATE ROUTE =================
+// ================= INDEX + CREATE =================
 router.route("/")
-.get( wrapAsync(ListingController.index))
-.post(
-  isLoggedIn,
-  validateListing,
-  upload.single('listing[image]'),
-  wrapAsync(ListingController.CreateRoute)
-);
-// ================= NEW ROUTE =================
-router.get("/new", isLoggedIn, ListingController.showpage);
+  .get(wrapAsync(ListingController.index))
+  .post(
+    isLoggedIn,
+    upload.single("listing[image]"),
+    validateListing,
+    wrapAsync(ListingController.create)
+  );
 
+// ================= NEW =================
+router.get("/new", isLoggedIn, ListingController.renderNewForm);
 
-// ================= SHOW ROUTE ================= // ================= UPDATE ROUTE =================// ================= DELETE ROUTE =================
+// ================= SHOW + UPDATE + DELETE =================
 router.route("/:id")
-.get(wrapAsync(ListingController.ShowRoute))
-.put(
-  isLoggedIn,
-  isOwner,
-  upload.single('listing[image]'),
-  validateListing,
-  wrapAsync(ListingController.UpdateRoute)
-)
-.delete(
-  isLoggedIn,
-  isOwner,
-  wrapAsync(ListingController.DeleteRoute)
-);
+  .get(wrapAsync(ListingController.show))
+  .put(
+    isLoggedIn,
+    isOwner,
+    upload.single("listing[image]"),
+    validateListing,
+    wrapAsync(ListingController.update)
+  )
+  .delete(
+    isLoggedIn,
+    isOwner,
+    wrapAsync(ListingController.destroy)
+  );
 
-
-
-// ================= EDIT ROUTE =================
+// ================= EDIT =================
 router.get(
   "/:id/edit",
   isLoggedIn,
   isOwner,
-  wrapAsync(ListingController.EditRoute)
+  wrapAsync(ListingController.renderEditForm)
 );
 
 module.exports = router;
